@@ -19,6 +19,6 @@ jobs:
     - name: Deploy
       uses: peaceiris/actions-gh-pages@master
       env:
-        ACTIONS_DEPLOY_KEY: ${{secrets.blog}}
+        ACTIONS_DEPLOY_KEY: ${{secrets.ACCESS_TOKEN}}
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: docs/.vuepress/dist
