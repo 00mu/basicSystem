@@ -1,0 +1,19 @@
+{
+  "name": "basicsystem",
+  "version": "1.0.0",
+  "description": "前端基础知识体系梳理",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "vuepress": "^1.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "author": "",
+  "license": "ISC"
+}
