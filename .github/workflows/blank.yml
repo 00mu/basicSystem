@@ -1,24 +1,19 @@
-name: blog deploy
-
-on: 
+name: GitHub Actions Build and Deploy Demo
+on:
   push:
-    branches: 
+    branches:
       - master
-
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    
     steps:
-    - uses: actions/checkout@master
-    - run: npm ci
-    - run: npm install vuepress
-    - run: npm run build
-    - run: cp CNAME docs/.vuepress/dist/
-    
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@master
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@master
       env:
-        ACTIONS_DEPLOY_KEY: ${{secrets.ACCESS_TOKEN}}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: docs/.vuepress/dist
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: .vuepress/dist
+        BUILD_SCRIPT: npm install && npm run build
