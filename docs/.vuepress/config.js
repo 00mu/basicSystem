@@ -32,12 +32,13 @@ module.exports = {
           ]
         },
         {
-          title: '深入理解系列',
+          title: '深入浅出系列',
           collapsable: false,
           children: [
             '/deepLearning/conversion',
             '/deepLearning/scope',
             '/deepLearning/prototype',
+            '/deepLearning/this',
             '/deepLearning/cssModel',
             '/deepLearning/render',
             '/deepLearning/eventLoop',
@@ -46,7 +47,19 @@ module.exports = {
             '/deepLearning/http',
           ]
         },
-        '/interview/interview'
+        {
+          title: '知识点梳理',
+          collapsable: false,
+          sidebarDepth: 2,
+          children: [
+            // '/interview/interview',
+            '/interview/concept',
+            '/interview/project',
+            '/interview/coding',
+          ]
+           
+        }
+        
       ],
     }
   }

@@ -35,7 +35,10 @@ var myFunction = function name([param[, param[, ...param]]]) {
 })();
 
 // 形式3，箭头函数表达式
-([param] [, param]) => { statements } param => expression
+([param][, param]) => {
+    statements
+}
+param => expression
 ```
 
 3. Function 构造器
@@ -84,10 +87,13 @@ func.call(o);
 
 ``` JS
 let a1 = 0;
+
 function fn1() {
     let a2 = 10;
+
     function fn2() {
         let a3 = 100;
+
         function fn3() {
             let a4 = 100;
             console.log(a1 + a2 + a3 + a4);
@@ -110,9 +116,11 @@ fn1();
 ``` JS
 let a1 = 0;
 console.log(1)
+
 function fn1() {
     console.log(2)
     let a2 = 10;
+
     function fn2() {
         console.log(3)
         let a3 = 100;
@@ -137,10 +145,11 @@ console.log(7)
 1. JS引擎总是从全局环境开始，从上到下逐行执行。首先把Gloable环境压入栈底，控制器开始执行其中的可执行代码，遇到执行函数fn1()立马激活函数fn1创建它的执行上下文。
 2. 将fn1的执行上下文入栈，控制器继续执行其中的可执行代码，遇到可执行函数fn2，激活fn2的执行上下文并入栈
 3. fn2从上到下依次执行遇到fn3，创建一个fn3的上下文入栈
-4. fn3执行到`}`或者return就出栈销毁fn3的上下文环境，控制权交给fn2往下之下，执行完毕弹出fn2销毁其上下文环境退回到fn1，依次直至执行栈清空
 
+4.fn3执行到 `}` 或者return就出栈销毁fn3的上下文环境，控制权交给fn2往下之下，执行完毕弹出fn2销毁其上下文环境退回到fn1，依次直至执行栈清空
 
 #### 新的问题，JS解释器如何找到我们定义的函数和变量？
+
 有一个抽象概念的**变量对象**（Variable Object），它用来存储执行上下文中的：
 
 1. 变量
@@ -151,43 +160,48 @@ console.log(7)
 
 ``` JS
 var a = 10;
-function test(x){
-  var b =20;
+
+function test(x) {
+    var b = 20;
 }
 test(30);
 
 // 以上代码会产生两个VO
-VO（globalContext） = {
-  a: 10,
-  test: <ref to function>
+VO（ globalContext） = {
+    a: 10,
+    test: < ref to
+    function >
 };
 VO(test functionContext) = {
-  x: 30,
-  b: 20
+    x: 30,
+    b: 20
 }
 ```
 
 变量初始化，VO会按照如下顺序填充变量：
+
 1. 函数参数（若为传入初始化该参数值为undefined）
 2. 函数声明（若发生命名冲突，会覆盖）
 2. 变量声明（若发生命名冲突，会忽略）
 
 ``` JS
 function test(a, b) {
-    var c= 10;
-    function d(){};
-    var e = function _e(){};
-    (function x(){});
-    b=20;
+    var c = 10;
+    console.log('变量初始化阶段：',a,b,c,d,e) // 变量初始化阶段： 20 undefined 10 ƒ d() {console.log(2)} undefined
+    function d() {console.log(1)};
+    function d() {console.log(2)};
+    var e = function _e() {};
+    b = 20;
+    console.log('函数体执行完毕：',a,b,c,d,e) //函数体执行完毕： 20 20 10 ƒ d() {console.log(2)} ƒ _e() {}
 }
 test(20)
 
 // 变量初始化阶段
 AO(test) = {
-    a: 10,
+    a: 20,
     b: undefined,
     c: undefined,
-    d: <ref to func "d">,
+    d: < ref to func "d" > ,
     e: undefined
 }
 
@@ -196,46 +210,46 @@ AO(test) = {
 ```
 
 看例子
+
 ``` JS
 alert(x); // function x(){} 解释：1. 声明函数x提前
 
 var x = 10; // 解释：2. 忽略x声明，直接赋值
 alert(x); // 10
-x=20;
+x = 20;
 
-function x(){};
+function x() {};
 alert(x); // 20
 
-if(true){
+if (true) {
     var a = 1; // 解释：3. a声明提前
-} else{
+} else {
     var b = true; // 解释：4. b 声明提前
 }
 
 alert(a); // 1
 alert(b); // undefined
 
-
 // 等价于
-let x = function x(){};
+let x = function x() {};
 let a = undefined;
 let b = undefined;
 
 alert(x);
 x = 10;
 alert(x);
-x=20;
+x = 20;
 alert(x);
 a = 1;
 alert(a);
 alert(b);
 ```
 
+### 4.this
 
-### 4. this
 this，是一个拥有巨大灵活性的家伙
 
-`this` 的取值是在执行的时候确定的，就是运行是所在的环境。注意区分变量是声明的时候确定的。
+`this` 的取值是在执行的时候确定的，就是运行时所在的环境。注意区分变量是声明的时候确定的。
 
 1. 普通函数的 this：指向顶层对象 window，也就是全局环境
 1. 作为对象方法的函数的 this：指向调用方法所在的对象
@@ -244,22 +258,26 @@ this，是一个拥有巨大灵活性的家伙
 1. 构造器中的 this：指向所在的对象
 
 改变this指向的方法:
+
 1. fn.call(o, args1, args2,...)
 1. fn.apply(o, [args1, args2,...])
 2. fn.bind(o)
 
 ### 5. 闭包
+
 闭包是指一个函数或函数的引用，与一个引用环境绑定在一起。这个引用环境是一个存储该函数每个自由变量的表。
 
 如何一眼识别出来闭包？简单来说函数执行的地方并不在定义的地方。两种典型的情况：
+
 1. 函数作为返回值
 2. 函数作为参数
 
 闭包的两个作用：
+
 1. 封装变量
 2. 延长局部变量寿命
 
 再简而言之，闭包里的函数取闭包里的值，闭包里的值来自函数定义的时候。
 
+闭包并不难对不对，闭包是高阶函数的基础，有点难... 
 
-闭包并不难对不对，闭包是高阶函数的基础，有点难...
