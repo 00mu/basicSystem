@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'WEB 前端基础知识体系梳理',
+    title: 'WEB 前端基础体系梳理',
     description: '进化中...',
     base: "/basicSystem/",
     themeConfig: {
@@ -7,15 +7,15 @@ module.exports = {
       editLinkText: '在 GitHub 上编辑此页',
       editLinks: true,
       docsDir: 'docs',
-      sidebarDepth: 1,
+      sidebarDepth: 7,
       displayAllHeaders: true,
       // 最后更新时间
       lastUpdated: 'Last Updated',
       sidebar: [
         '/',
         {
-          title: 'Web 标准',
-          collapsable: false,
+          title: '手册',
+          collapsable: true,
           children: [
             {
               title: 'W3C 规范',
@@ -39,9 +39,9 @@ module.exports = {
             '/deepLearning/scope',
             '/deepLearning/prototype',
             '/deepLearning/this',
+            '/deepLearning/eventLoop',
             '/deepLearning/cssModel',
             '/deepLearning/render',
-            '/deepLearning/eventLoop',
             '/deepLearning/async',
             '/deepLearning/optimization',
             '/deepLearning/http',
@@ -49,15 +49,13 @@ module.exports = {
         },
         {
           title: '知识点梳理',
-          collapsable: false,
-          sidebarDepth: 2,
+          collapsable: true,
           children: [
             // '/interview/interview',
             '/interview/concept',
             '/interview/project',
             '/interview/coding',
           ]
-           
         }
         
       ],
