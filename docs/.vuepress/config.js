@@ -11,6 +11,10 @@ module.exports = {
       displayAllHeaders: true,
       // 最后更新时间
       lastUpdated: 'Last Updated',
+      algolia: {
+        apiKey: '15e19f41ccec97797a1834e9e1b94d1f',
+        indexName: 'bbzz_basicsystem'
+      },
       sidebar: [
         '/',{
           title: '深入浅出系列',
