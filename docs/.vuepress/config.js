@@ -7,62 +7,102 @@ module.exports = {
     editLinkText: "在 GitHub 上编辑此页",
     editLinks: true,
     docsDir: "docs",
-    // sidebarDepth: 0,
-    displayAllHeaders: true,
+    sidebarDepth: 2,
     // 最后更新时间
     lastUpdated: "Last Updated",
     algolia: {
       apiKey: "15e19f41ccec97797a1834e9e1b94d1f",
       indexName: "bbzz_basicsystem",
     },
-    sidebar: [
-      "/",
+    nav: [
       {
-        title: "面试点梳理",
-        collapsable: false,
-        sidebarDepth: 4,
-        children: [
-          "/interview/JS",
-          "/interview/Vue",
-          "/interview/React",
-          "/interview/Http",
-          "/interview/Html",
-          "/interview/CSS",
-          "/interview/Webpack",
-          // "/interview/project",
-          // "/interview/coding",
-        ],
-      },
-      {
-        title: "深入浅出系列",
-        collapsable: false,
-        children: [
-          "/deepLearning/conversion",
-          "/deepLearning/scope",
-          "/deepLearning/prototype",
-          "/deepLearning/this",
-          "/deepLearning/eventLoop",
-          "/deepLearning/render",
-          "/deepLearning/http",
-          "/deepLearning/async",
-          "/deepLearning/cssModel",
-          "/deepLearning/optimization",
-        ],
-      },
-      {
-        title: "手册",
-        collapsable: true,
-        children: [
+        text: "手稿",
+        items: [
           {
-            title: "W3C 规范",
-            collapsable: false,
-            children: ["/w3c/HTML", "/w3c/CSS", "/w3c/WEB-API"],
+            text: "基础语法",
+            items: [
+              { text: "JavaScript", link: "/JavaScript/" },
+              { text: "HTML", link: "/basic/HTML/" },
+              { text: "CSS", link: "/basic/CSS/" },
+            ],
           },
-          "/javaScript/grammar",
-          "/javaScript/stdlib",
-          "/javaScript/ES6",
+          {
+            text: "MVVM",
+            items: [
+              { text: "VUE", link: "/mvvm/VUE/" },
+              { text: "React", link: "/mvvm/React/" },
+              { text: "Electron", link: "/mvvm/Electron/" },
+            ],
+          },
+          {
+            text: "前端工程",
+            items: [{ text: "webpack", link: "/webpack/" }],
+          },
+        ],
+      },
+      { text: "专题", link: "/deepLearning/" },
+      { text: "Coding", link: "/coding/" },
+      { text: "考点", link: "/interview/" },
+      {
+        text: "工具",
+        items: [
+          {
+            text: "编辑器",
+            items: [
+              { text: "GIT", link: "/soft/git" },
+              { text: "VSCODE", link: "/soft/vscode/" },
+            ],
+          },
+          {
+            text: "效率工具",
+            items: [{ text: "figma", link: "figma.com" }],
+          },
         ],
       },
     ],
+    sidebar: {
+      // Coding
+      "/coding/": [""],
+
+      // 专题
+      "/deepLearning/": [
+        "",
+        "conversion",
+        "scope",
+        "prototype",
+        "this",
+        "eventLoop",
+        "render",
+        "http",
+        "async",
+        "cssModel",
+        "optimization",
+      ],
+
+      // 面试考点
+      "/interview/": [
+        "JS",
+        "Vue",
+        "React",
+        "Webpack",
+        "Http",
+        "DesignPatterns",
+
+        "Html",
+        "CSS",
+      ],
+
+      "/mvvm/": [],
+
+      "/javaScript/": ["", "grammar", "stdlib", "webApi", "ES6"],
+      "/html/": [""],
+      "/css/": [""],
+
+      // 开发工具
+      "/soft/": ["git", "vscode"],
+
+      // 基础手册
+      "/": ["", "/coding/", "/deepLearning/"],
+    },
   },
 };
