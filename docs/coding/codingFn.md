@@ -247,7 +247,172 @@ Function.prototype._bind = function(context, ...args){
 
 :::
 
-## 实现类的继承
+## 多种实现 - 继承
+
+多种继承方式的优缺点
+
+::: details 1. 原型链继承
+
+```JS
+function Person(){
+  this.name = 'kevin';
+}
+Person.prototype.say = function(){
+  console.log(this.name)
+}
+
+function Child() {}
+Child.prototype = new Person();
+
+const child1 = new Child();
+
+child1.name; // 'kevin'
+```
+
+存在问题有二：
+
+1. 多个引用类型属性 被所有实例共享（实例读取的 Child 的 name 属性）
+2. 创建 Child 的实例时，无法向 Person 传参
+
+```JS
+function Person(){
+  this.name = ['kevin', 'lily'];
+}
+
+function Child() {}
+Child.prototype = new Person();
+
+const child1 = new Child();
+const child2 = new Child();
+
+child1.name.push('bobo');
+child2.name; // ["kevin", "lily", "bobo"]
+```
+
+:::
+
+::: details 2. 经典继承 • 借用构造函数
+
+```JS
+function Person(age){
+  this.name = ['kevin', 'lily'];
+  this.age = age;
+}
+function Child(age) {
+  // call 来借用构造函数Person，并实现传参
+  Person.call(this, age)
+}
+```
+
+验证：
+
+```JS
+const child1 = new Child(28);
+const child2 = new Child(19);
+child1.name.push('bobo');
+
+child1.age; // 28
+child2.age; // 19
+child1.name; //["kevin", "lily", "bobo"]
+child2.name; //["kevin", "lily"]
+```
+
+避免了原型链继承方案，实例之间属性影响和不可传参的缺点；
+此方案的缺点在于：
+
+1. 每次创建实例都要创建一次方法;
+2. Person.prototype 上的属性无法继承
+   :::
+
+::: details 3. 组合继承 • 原型链继承+经典继承
+综合了二者的优点
+
+```JS{11}
+// 经典继承 • 借用构造函数
+function Person(age){
+  this.name = ['kevin', 'lily'];
+  this.age = age;
+}
+function Child(age) {
+  Person.call(this, age)
+}
+// 原型链
+Child.prototype = new Person();
+// constructor 指会本身
+Child.prototype.constructor = Child;
+```
+
+缺点在于：调用两次父级构造函数：
+`new`模拟实现时，内部借用 call 方法， Person.call(this, ...args)
+
+```JS
+// 1次
+Child.prototype = new Parent();
+// 2次
+const child1 = new Child()
+```
+
+:::
+
+::: details 4. 原型式继承
+Object.create()，和原型链继承存在同样的问题
+
+Object.create 的模拟实现：
+
+```JS
+function createObj(o) {
+  function F(){}
+  F.prototype = o;
+  return new F();
+}
+```
+
+:::
+
+::: details 5.寄生式继承
+封装一个创建继承过程的函数，该函数在内部以某种形式来做强对象
+
+```JS
+function creatObj(o){
+  const clone = Object.create(o)
+  clone.say() = function(){
+    console.log('hi')
+  }
+  return clone
+}
+```
+
+不足之处，在于每次创建对象都会调用一次方法
+:::
+
+::: details 6.最终版：寄生组合式继承
+
+```JS
+function prototype(child, parent) {
+  child.prototype = Object.create(parent.prototype)
+  // child.prototype.constructor = child;
+  // constructor属性不可遍历
+  Object.definePrototype(child.prototype, 'constructor', {
+    value: child;
+    enumerable: false;
+  })
+}
+
+// 使用
+prototype(Child, Parent);
+```
+
+:::
+
+## 多种实现 - 创建对象
+
+::: details 1.工厂模式
+
+```JS
+// JavaScript
+```
+
+:::
 
 ## 实现防抖函数（debounce）
 
