@@ -1,10 +1,46 @@
 # webpack 和 babel
 
+- webpack 是用来做什么的，原理是什么
+- webpack 中的 loader 的作用是什么
+- 有没有自己写过一个 webpack 的 loader
+- webpack 中 plugin 的作用是什么，有没有自己写过
+- 使用 webpack 时如何优化项目体积
+- 什么是 HMR，原理是什么
+- 使用 webpack 打包时，如何更好地利用 long term cache
+- 随着 http2 的发展，webpack 有没有更好的打包方案
+- webpack 中 tree shaking 的原理是什么
+- vue-loader 的实现原理是什么
+- 对于已经 import 但未实际使用的模块使用 webpack 还会对它打包吗？
+- Code Splitting 的原理是什么
+
 需要自己配置 webpack！
 前端为什么需要打包构建？
 
 babel 是语言编译工具
 webpack 用来打包
+
+[很好的 webpack](https://juejin.im/post/5e6f4b4e6fb9a07cd443d4a5#heading-18)
+
+- 0: "0.有哪些常见的 Loader？你用过哪些 Loader？"
+- 1: "1.有哪些常见的 Plugin？你用过哪些 Plugin？"
+- 2: "2.那你再说一说 Loader 和 Plugin 的区别？"
+- 3: "3.Webpack 构建流程简单说一下"
+- 4: "4.使用 webpack 开发时，你用过哪些可以提高效率的插件？"
+- 5: "5.source map 是什么？生产环境怎么用？"
+- 6: "6.模块打包原理知道吗？"
+- 7: "7.文件监听原理呢？"
+- 8: "8.说一下 Webpack 的热更新原理吧"
+- 9: "9.如何对 bundle 体积进行监控和分析？"
+- 10: "10.文件指纹是什么？怎么用？↵JS 的文件指纹设置 ↵CSS 的文件指纹设置 ↵ 图片的文- 件指纹设置"
+- 11: "JS 的文件指纹设置"
+- 12: "CSS 的文件指纹设置"
+- 13: "图片的文件指纹设置"
+- 14: "11.在实际工程中，配置文件上百行乃是常事，如何保证各个 loader 按照预想方式工- 作？"
+- 15: "12.如何优化 Webpack 的构建速度？"
+- 16: "13.你刚才也提到了代码分割，那代码分割的本质是什么？有什么意义呢？"
+- 17: "14.是否写过 Loader？简单描述一下编写 loader 的思路？"
+- 18: "15.是否写过 Plugin？简单描述一下编写 Plugin 的思路？"
+- 19: "16.聊一聊 Babel 原理吧"
 
 ## webpack 是什么？
 

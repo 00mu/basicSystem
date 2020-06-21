@@ -7,7 +7,7 @@ module.exports = {
     editLinkText: "在 GitHub 上编辑此页",
     editLinks: true,
     docsDir: "docs",
-    sidebarDepth: 2,
+    sidebarDepth: 3,
     // 最后更新时间
     lastUpdated: "Last Updated",
     algolia: {
@@ -62,7 +62,7 @@ module.exports = {
     ],
     sidebar: {
       // Coding
-      "/coding/": [""],
+      "/coding/": ["", "codingFn"],
 
       // 专题
       "/deepLearning/": [
@@ -81,15 +81,16 @@ module.exports = {
 
       // 面试考点
       "/interview/": [
+        "",
+        "HTML&CSS",
         "JS",
-        "Vue",
-        "React",
-        "Webpack",
-        "Http",
-        "DesignPatterns",
+        // "Vue",
+        // "React",
+        // "Webpack",
+        // "Http",
+        // "DesignPatterns",
 
-        "Html",
-        "CSS",
+        // "html",
       ],
 
       "/mvvm/": [],
