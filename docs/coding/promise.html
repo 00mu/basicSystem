@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>promise</title>
+  </head>
+  <body>
+    <script src="./codingPromise.js"></script>
+    <script>
+      let p = new HD((resolve, reject) => {
+        // setTimeout(() => {
+        //   resolve("解决");
+        //   // reject("拒绝");
+        // }, 1000);
+        resolve("解决");
+      })
+        .then((val) => {
+          console.log("val");
+          return new HD((resolve) => resolve("zhoubo"));
+        })
+        .then((el) => console.log(el));
+      // .then()
+      // .then(
+      //   (value) => {
+      //     console.log("123", value);
+      //   },
+      //   (error) => {
+      //     console.log("Error" + error);
+      //   }
+      // );
+
+      // 函数作为返参数
+      // function fn(f0) {
+      //   f0(resolve, reject);
+      //   function resolve(value) {
+      //     console.log("resolve", value);
+      //   }
+      //   function reject(value) {
+      //     console.log("reject", value);
+      //   }
+      // }
+
+      // fn((f1, f2) => {
+      //   f1("hha");
+      // });
+
+      // fo = function(f1, f2) {
+      //   f1("haha");
+      // };
+    </script>
+  </body>
+</html>

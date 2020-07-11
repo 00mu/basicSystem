@@ -80,18 +80,7 @@ module.exports = {
       ],
 
       // 面试考点
-      "/interview/": [
-        "",
-        "HTML&CSS",
-        "JS",
-        // "Vue",
-        // "React",
-        // "Webpack",
-        // "Http",
-        // "DesignPatterns",
-
-        // "html",
-      ],
+      "/interview/": ["", "Http", "HTML", "CSS", "JS"],
 
       "/mvvm/": [],
 
