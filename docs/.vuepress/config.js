@@ -80,7 +80,7 @@ module.exports = {
       ],
 
       // 面试考点
-      "/interview/": ["", "Http", "HTML", "CSS", "JS"],
+      "/interview/": ["", "Http", "performance", "HTML", "CSS", "JS"],
 
       "/mvvm/": [],
 

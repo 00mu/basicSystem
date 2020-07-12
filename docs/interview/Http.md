@@ -304,6 +304,118 @@ HTTPS 称为超文本传输安全协议，经由 HTTP 进行通信，利用 TLS/
 
 Client- 请求公钥 ->Server—公钥+数字签名—>Client- 1.验证证书-2.生成随机对称密钥-3.利用服务端的公钥加密对称密钥-4.发送加密后的对称密钥->Server
 
+### 10. cookie 和 session 有什么区别
+
+Cookie 的出现，是为了辨别用户身份而储存在用户本地终端上的数据，解决客户端与服务端会话状态的问题，因为『HTTP 是一个无状态的协议』
+
+Cookie 主要用于以下三个方面
+
+1. 会话状态管理（如用户登录状态、购物车、游戏分数或其它需要记录的信息）
+2. 个性化设置（如用户自定义设置、主题等）
+3. 浏览器行为跟踪（如跟踪分析用户行为等）
+
+那 Cookie 是怎么设置的呢？简单来说就是：
+
+1. 客户端发送 HTTP 请求到服务器
+2. 当服务器收到 HTTP 请求时，在响应头里面添加一个 Set-Cookie 字段
+3. 浏览器收到响应后保存下 Cookie
+4. 之后对该服务器每一次请求中都通过 Cookie 字段将 Cookie 信息发送给服务器。
+
+Cookies 的属性有：
+
+- Name/Value ：用 JavaScript 操作 Cookie 的时候注意对 Value 进行编码处理
+- Expires： 设置 Cookie 的过期时间
+- Max-Age 在 Cookie 失效之前需要经过的秒数
+- Domain 指定了 Cookie 可以送达的主机名
+  > 像淘宝首页设置的 Domain 就是 .taobao.com，这样无论是 a.taobao.com 还是 b.taobao.com 都可以使用 Cookie<br/>
+  > 不能跨域设置 Cookie，比如阿里域名下的页面把 Domain 设置成百度是无效的
+- Path: Path 指定了一个 URL 路径，这个路径必须出现在要请求的资源的路径中才可以发送 Cookie 首部
+  > Domain 和 Path 标识共同定义了 Cookie 的作用域：即 Cookie 应该发送给哪些 UR
+- Secure： 标记为 Secure 的 Cookie 只应通过被 HTTPS 协议加密过的请求发送给服务端。
+- HTTPOnly：设置 HTTPOnly 属性可以防止客户端脚本通过 document.cookie 等方式访问 Cookie，有助于避免 XSS 攻击
+- SameSite：之前默认是 None 的，Chrome80 后默认是 Lax
+  1.  Strict 仅允许一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。
+  2.  Lax 允许部分第三方请求携带 Cookie
+  3.  None 无论是否跨站都会发送 Cookie
+
+#### session 认证流程
+
+用户第一次请求服务器的时候，服务器根据用户提交的相关信息，创建对应的 Session
+请求返回时将此 Session 的唯一标识信息 SessionID 返回给浏览器
+
+浏览器接收到服务器返回的 SessionID 信息后，会将此信息存入到 Cookie 中，同时 Cookie 记录此 SessionID 属于哪个域名
+
+当用户第二次访问服务器的时候，请求会自动判断此域名下是否存在 Cookie 信息，如果存在自动将 Cookie 信息也发送给服务端，服务端会从 Cookie 中获取
+
+SessionID，再根据 SessionID 查找对应的 Session 信息，如果没有找到说明用户没有登录或者登录失效，如果找到 Session 证明用户已经登录可执行后面操作。
+
+SessionID 是连接 Cookie 和 Session 的一道桥梁，大部分系统也是根据此原理来验证用户登录状态。
+
+#### Cookie 和 Session 的区别
+
+- 安全性： Session 比 Cookie 安全，Session 是存储在服务器端的，Cookie 是存储在客户端的。
+- 存取值的类型不同：Cookie 只支持存字符串数据，想要设置其他类型的数据，需要将其转换成字符串，Session 可以存任意数据类型。
+- 有效期不同： Cookie 可设置为长时间保持，比如我们经常使用的默认登录功能，Session 一般失效时间较短，客户端关闭（默认情况下）或者 Session 超时都会失效。
+- 存储大小不同： 单个 Cookie 保存的数据不能超过 4K，Session 可存储数据远高于 Cookie，但是当访问量过多，会占用过多的服务器资源。
+
+### 11. 了解过 jwt/用户 token 的生成和使用吗
+
+- JSON Web Token（简称 JWT）是目前最流行的跨域认证解决方案
+- 是一种认证授权机制
+- JWT 是为了在网络应用环境间传递声明而执行的一种基于 JSON 的开放标准（RFC 7519）。JWT 的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源。比如用在用户登录上
+- 可以使用 HMAC 算法或者是 RSA 的公/私秘钥对 JWT 进行签名。因为数字签名的存在，这些传递的信息是可信的
+
+#### JWT 认证流程：
+
+用户输入用户名/密码登录，服务端认证成功后，会返回给客户端一个 JWT
+客户端将 token 保存到本地（通常使用 localstorage，也可以使用 cookie）
+当用户希望访问一个受保护的路由或者资源的时候，需要请求头的 Authorization 字段中使用 Bearer 模式添加 JWT，其内容看起来是下面这样
+
+```JS
+Authorization: Bearer <token>
+```
+
+#### 特点
+
+- 服务端的保护路由将会检查请求头 Authorization 中的 JWT 信息，如果合法，则允许用户的行为
+- 因为 JWT 是自包含的（内部包含了一些会话信息），因此减少了需要查询数据库的需要
+- 因为 JWT 并不使用 Cookie 的，所以你可以使用任何域名提供你的 API 服务而不需要担心跨域资源共享问题（CORS）
+- 因为用户的状态不再存储在服务端的内存中，所以这是一种无状态的认证机制
+
+### 12. 谈谈 Cookie 和 SameSite 属性
+
+SameSite 可以有下面三种值：
+
+1. Strict 仅允许一方请求携带 Cookie，即浏览器将只发送相同站点请求的 Cookie，即当前网页 URL 与请求目标 URL 完全一致。
+2. Lax 允许部分第三方请求携带 Cookie
+3. None 无论是否跨站都会发送 Cookie
+
+之前默认是 None 的，Chrome80 后默认是 Lax。
+
+![img](https://camo.githubusercontent.com/149e5a3d4eadf8a9f19f26ffc5de5a5f37a62da4/68747470733a2f2f67772e616c6963646e2e636f6d2f7466732f54423172473448794b4832674b306a535a4645585863714d7058612d313430302d3532382e706e67)
+
+从上图可以看出，对大部分 web 应用而言，Post 表单，iframe，AJAX，Image 这四种情况从以前的跨站会发送三方 Cookie，变成了不发送。
+
+- Post 表单：应该的，学 CSRF 总会举表单的例子。
+
+- iframe：iframe 嵌入的 web 应用有很多是跨站的，都会受到影响。
+
+- AJAX：可能会影响部分前端取值的行为和结果。
+
+- Image：图片一般放 CDN，大部分情况不需要 Cookie，故影响有限。但如果引用了需要鉴权的图片，可能会受到影响。
+
+除了这些还有 script 的方式，这种方式也不会发送 Cookie，像淘宝的大部分请求都是 jsonp，如果涉及到跨站也有可能会被影响。
+
+影响：
+
+1. 淘宝部分页面内嵌支付宝确认付款和确认收货页面、天猫内嵌淘宝的登录页面等，由于 Cookie 失效，付款、登录等操作都会失败
+2. 阿里妈妈在各大网站比如今日头条，网易，微博等投放的广告，也是用 iframe 嵌入的，没有了 Cookie，就不能准确的进行推荐
+3. 一些埋点系统会把用户 id 信息埋到 Cookie 中，用于日志上报，这种系统一般走的都是单独的域名，与业务域名分开，所以也会受到影响。
+
+解决方案就是设置 SameSite 为 none。
+
+如果你想加 SameSite=none 属性，那么该 Cookie 就必须同时加上 Secure 属性，表示只有在 HTTPS 协议下该 Cookie 才会被发送。
+
 ## HTTP 缓存
 
 ### 01. 尽可能详细的介绍 http 缓存
