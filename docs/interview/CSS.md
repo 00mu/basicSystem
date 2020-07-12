@@ -2,6 +2,248 @@
 
 对 Web 标准的理解、浏览器内核差异、兼容性、hack、CSS 基本功：布局、盒子模型、选择器优先级、 HTML5、CSS3、Flexbox
 
-## DOM
+## 概念
 
-## CSS
+### 01. 什么是 盒模型
+
+页面渲染时，dom 元素所采用的 布局模型。可通过 box-sizing 进行设置。
+
+- 标准盒模型 content-box
+- IE 盒模型 border-box
+
+### 02. 什么是 BFC
+
+块级格式化上下文，是一个独立的渲染区域，让处于 BFC 内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响。
+
+触发条件：
+
+- 根元素
+- position: absolute/fixed
+- display: inline-block / table
+- float 元素
+- ovevflow !== visible
+
+应用:
+
+- 阻止 margin 重叠
+- 可以包含浮动元素 —— 清除内部浮动(清除浮动的原理是两个 div 都位于同一个 BFC 区域之中)
+- 自适应两栏布局
+- 可以阻止元素被浮动元素覆盖
+
+### 03. 层叠上下文、层叠等级、层叠顺序、z-index
+
+**层叠上下文：**
+
+每个盒模型的位置是三维的，分别是平面画布上的 X 轴，Y 轴以及表示层叠的 Z 轴。一般情况下，元素在页面上沿 X 轴 Y 轴平铺，我们察觉不到它们在 Z 轴上的层叠关系。而一旦元素发生堆叠，这时就能发现某个元素可能覆盖了另一个元素或者被另一个元素覆盖。
+
+元素提升为一个比较特殊的图层，在三维空间中 (z 轴) 高出普通元素一等。
+
+触发条件：
+
+- 根层叠上下文(html)
+- position
+- css3 属性
+- flex
+- transform
+- opacity
+- filter
+- will-change
+- -webkit-overflow-scrolling
+
+**层叠等级**
+![img](https://user-gold-cdn.xitu.io/2019/2/14/168e9d9f3a1d368b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+层叠等级：层叠上下文在 z 轴上的排序
+
+- 在同一层叠上下文中，层叠等级才有意义
+- z-index 的优先级最高
+- 若父级有层级等级，受父级限制
+
+### 04. 选择器优先级
+
+- !important > 行内样式 > #id > .class > tag > \* > 继承 > 默认
+- 选择器 从右往左 解析
+- 权重叠加
+
+### 05. CSS 有哪些样式可以给子元素继承
+
+- 可继承的:font-size,font-weight,line-height,color,cursor 等
+- 不可继承的一般是会改变盒子模型的:display,margin、border、padding、height 等
+
+### 06. 行内元素有哪些？块级元素有哪些？ 空(void)元素有那些
+
+- 行内: input,span,a,img 以及 display:inline 的元素
+- 块级: p,div,header,footer,aside,article,ul 以及 display:block 这些
+- void: br,hr
+
+### 07. 外边距塌陷的问题
+
+外边距合并指的是，当两个垂直外边距相遇时，它们将形成一个外边距。合并后的外边距的高度等于两个发生合并的外边距的高度中的较大者。
+
+只有普通文档流中块框的垂直外边距才会发生外边距合并。行内框、浮动框或绝对定位之间的外边距不会合并。
+
+## Coding
+
+### 01. 清除浮动的方式有哪些
+
+- .clearfix
+- clear:both
+- overflow:hidden
+
+```CSS
+.clearfix::after {
+  content:"";
+  display:table;
+  clear: both;
+}
+```
+
+### 02. 单行省略 和 多行文本溢出省略
+
+```CSS
+/* 单行 */
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;
+```
+
+```CSS
+/* 多行 */
+overflow : hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+```
+
+### 03. 水平垂直居中的 N 种写法
+
+```HTML
+<div class="wp">
+    <div class="box size">123123</div>
+</div>
+```
+
+1. absolute + margin auto
+
+这种方法兼容性也很好，缺点是需要知道子元素的宽高
+
+```CSS
+.wp {
+    position: relative;
+}
+.box {
+    position: absolute;;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+
+    width: 100px;
+    height: 100px;
+}
+```
+
+2. absolute + calc
+
+```CSS
+.wp {
+    position: relative;
+}
+.box {
+    position: absolute;;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+}
+```
+
+3. absolute + transform
+
+   完美
+
+```CSS
+.wp {
+    position: relative;
+}
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+```
+
+4. css-table
+
+   向下兼容性好，但语义并不优雅
+
+```CSS
+.wp {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.box {
+    display: inline-block;
+}
+```
+
+5. flex
+   完美
+
+```CSS
+.wp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
+
+6. grid
+
+```CSS
+.wp {
+    display: grid;
+}
+.box {
+    align-self: center;
+    justify-self: center;
+}
+```
+
+grid 兼容性略差
+
+## CSS3 动画
+
+### 01. CSS 中 transition 和 animate 有何区别
+
+`transition` 过渡效果, 没时间轴的概念, 通过事件触发(一次),没中间状态(只有开始和结束)
+
+`animation` 补间动画，有时间轴的概念(帧可控),可以重复触发和有中间状态;
+
+```CSS
+animation: name duration timing-function delay iteration-count direction;
+```
+
+| 属性                      | 描述                                   |
+| ------------------------- | -------------------------------------- |
+| animation-name            | 规定需要绑定到选择器的 keyframe 名称   |
+| animation-duration        | 规定完成动画所花费的时间，以秒或毫秒计 |
+| animation-timing-function | 规定动画的速度曲线                     |
+| animation-delay           | 规定在动画开始之前的延迟               |
+| animation-iteration-count | 规定动画应该播放的次数                 |
+| animation-direction       | 规定是否应该轮流反向播放动画           |
+
+```CSS
+transition: <property> <duration> <timing-function> <delay>;
+```
+
+| 属性                       | 描述                                  |
+| -------------------------- | ------------------------------------- |
+| transition-property        | 规定应用过渡的 CSS 属性的名称         |
+| transition-duration        | 定义过渡效果花费的时间。默认是 0      |
+| transition-timing-function | 规定过渡效果的时间曲线。默认是 "ease" |
+| transition-delay           | 规定过渡效果何时开始。默认是 0        |
