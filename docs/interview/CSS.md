@@ -247,3 +247,42 @@ transition: <property> <duration> <timing-function> <delay>;
 | transition-duration        | 定义过渡效果花费的时间。默认是 0      |
 | transition-timing-function | 规定过渡效果的时间曲线。默认是 "ease" |
 | transition-delay           | 规定过渡效果何时开始。默认是 0        |
+
+### 02. animation 动画停在最后一帧
+
+设置 CSS 动画在执行之前和之后如何将样式应用于其目
+
+```CSS
+animation-fill-mode : none | forwards | backwards | both;
+animation-fill-mode: forwards;
+```
+
+- none 是默认值，表示动画播放完成后，恢复到初始的状态。
+- forwards 表示动画播放完成后，保持 @keyframes 里最后一帧的样式。
+- backwards 表示开始播放动画之前，元素的样式将设置为动画第一帧的样式
+- both 相当于同时配置了 forwards 和 backwards。也就是说，动画开始前，元素样式将设置为动画第一帧的样式；而在动画线束状态，元素样式将设置为动画最后一帧样式。
+
+### 03. js 动画和 css3 动画有何区别
+
+CSS 动画比 JS 流畅的前提：
+
+- 在 Chromium 基础上的浏览器中
+- JS 在执行一些昂贵的任务
+- 同时 CSS 动画不触发 layout 或 paint
+- 在 CSS 动画或 JS 动画触发了 paint 或 layout 时，需要 main thread 进行 Layer 树的重计算，这时 CSS 动画或 JS 动画都会阻塞后续操作。
+
+仅触发 Composite，不触发 layout 或 paint
+
+- backface-visibility
+- opacity
+- perspective
+- perspective-origin
+- transfrom
+
+所以只有用上了 3D 加速或修改 opacity 时，才有机会用得上 CSS 动画的这一优势。
+
+- 当您为 UI 元素采用较小的独立状态时，使用 CSS
+- 在需要对动画进行大量控制时，使用 JavaScript + Web Animations API
+- 如果您需要手动协调整个场景，可直接使用 requestAnimationFrame
+
+使用 JavaScript 动画，您可以完全控制元素在每个步骤的样式。这意味着您可以在您认为合适时减慢动画、暂停动画、停止动画、倒退动画和操纵元素。如果您正在构建复杂的对象导向型应用，则此方法特别有用，因为您可以正确封装您的行为。

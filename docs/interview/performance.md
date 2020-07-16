@@ -112,6 +112,8 @@ DNS 和 TCP 往往需要服务端同学协作完成，前端可以做的努力�
 3. HTTP Cache（「计算机网络-缓存」章节）
 4. Push Cache (http2 新特性)
 
+> HTTP/2 PUSH 功能可以让服务器在没有相应的请求情况下预先将资源推送到客户端。这个跟 preload/prefetch 预加载资源的思路类似，将下载和资源实际执行分离的方法，当脚本真正想要请求文件的时候，发现脚本就存在缓存中，就不需要去请求网络了。
+
 ### 02. Cookie 有什么用
 
 Cookie 的本职工作并非本地存储，而是“维持状态”。
@@ -367,6 +369,14 @@ JS 是很快的，在 JS 中修改 DOM 对象也是很快的。在 JS 的世界�
 
   这些值有一个共性，就是需要通过**即时计算**得到。因此浏览器为了获取这些值，也会进行回流。
 
+仅触发 Composite，不触发 layout 或 paint
+
+- backface-visibility
+- opacity
+- perspective
+- perspective-origin
+- transfrom
+
 对策：
 
 1. 将“导火索”缓存起来，避免频繁改动
@@ -608,6 +618,9 @@ timing.loadEventStart - timing.fetchStart
 ## 开发环境
 
 ### 01. 开发环境如何优化
+
+webpack 优化套路：
+核心思路就那几条：加缓存，搞并行，提前做，少执行。
 
 以上都是从生产环境，让我们的产品网页更快抵达用户，提升用户体验。
 
