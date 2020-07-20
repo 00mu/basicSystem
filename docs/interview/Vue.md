@@ -160,21 +160,175 @@
     2. 使用带有 setter 的双向绑定计算属性。见以下例子[来自官方文档](https://vuex.vuejs.org/zh/guide/forms.html)：
 
 8.  ### Vue 的响应式原理中 Object.defineProperty 有什么缺陷？
-9.  ### redux 为什么要把 reducer 设计成纯函数
-10. ### Vue 的父组件和子组件生命周期钩子执行顺序是什么
-11. ### react-router 里的 `<Link>` 标签和 `<a>` 标签有什么区别
-12. ### vue 在 v-for 时给每项元素绑定事件需要用事件代理吗？为什么？
-13. ### React 和 Vue 的 diff 时间复杂度从 O(n^3) 优化到 O(n) ，那么 O(n^3) 和 O(n) 是如何计算出来的？
-14. ### vue 渲染大量数据时应该怎么优化？
-15. ### vue 如何优化首页的加载速度？vue 首页白屏是什么问题引起的？如何解决呢？
-16. ### vue 是如何对数组方法进行变异的？例如 push、pop、splice 等方法
-17. ### 谈一谈 nextTick 的原理
-18. ### Vue 中的 computed 是如何实现的（腾讯、平安）
-19. ### Vue 中的 computed 和 watch 的区别在哪里（虾皮）
-20. ### v-if、v-show、v-html 的原理是什么，它是如何封装的？
 
-目录
-[题目来源](https://juejin.im/post/59ffb4b66fb9a04512385402)
+    1. Object.defineProperty 无法监控到数组下标的变化，导致通过数组下标添加元素，不能实时响应；
+    2. Object.defineProperty 只能劫持对象的属性，从而需要对每个对象，每个属性进行遍历，如果，属性值是对象，还需要深度遍历。Proxy 可以劫持整个对象，并返回一个新的对象。
+    3. Proxy 不仅可以代理对象，还可以代理数组。还可以代理动态增加的属性。
+
+    ```JS
+    push()
+    pop()
+    shift()
+    unshift()
+    splice()
+    sort()
+    reverse()
+    ```
+
+    ```JS
+    Object.defineProperty(obj, 'key', {
+    enumerable: false,
+    configurable: false,
+    writable: false,
+    value: 'static'
+    });
+    ```
+
+    ```JS
+    const handler = {
+        get: function(obj, prop) {
+            return prop in obj ? obj[prop] : 37;
+        }
+    };
+
+    const p = new Proxy({}, handler);
+    ```
+
+9.  ### Vue 的父组件和子组件生命周期钩子执行顺序是什么
+
+    1. 加载渲染过程 父 beforeCreate->父 created->父 beforeMount->子 beforeCreate->子 created->子 beforeMount->子 mounted->父 mounted
+    2. 子组件更新过程 父 beforeUpdate->子 beforeUpdate->子 updated->父 updated
+    3. 父组件更新过程 父 beforeUpdate->父 updated
+    4. 销毁过程 父 beforeDestroy->子 beforeDestroy->子 destroyed->父 destroyed
+
+10. ### react-router 里的 `<Link>` 标签和 `<a>` 标签有什么区别
+
+    从最终渲染的 DOM 来看，这两者都是链接，都是 `<a>` 标签，区别是：
+
+    `<Link>` 是 react-router 里实现路由跳转的链接，一般配合 `<Route>` 使用，react-router 接管了其默认的链接跳转行为，区别于传统的页面跳转，`<Link>` 的“跳转”行为只会触发相匹配的 `<Route>` 对应的页面内容更新，而不会刷新整个页面。
+    而 `<a>` 标签就是普通的超链接了，用于从当前页面跳转到 href 指向的另一个页面（非锚点情况）
+
+11. ### vue 在 v-for 时给每项元素绑定事件需要用事件代理吗？为什么？
+
+    1. 将事件处理程序代理到父节点，减少内存占用率
+    2. 动态生成子节点时能自动绑定事件处理程序到父节点
+
+    从 vue 的角度上来看上面两点
+
+    - 在 v-for 中，我们直接用一个 for 循环就能在模板中将每个元素都绑定上事件，并且当组件销毁时，vue 也会自动给我们将所有的事件处理器都移除掉。所以事件代理能做到的第一点 vue 已经给我们做到了
+    - 在 v-for 中，给元素绑定的都是相同的事件，所以除非上千行的元素需要加上事件，其实和使用事件代理的性能差别不大，所以也没必要用事件代理
+
+12. ### React 和 Vue 的 diff 时间复杂度从 O(n^3) 优化到 O(n) ，那么 O(n^3) 和 O(n) 是如何计算出来的？
+
+    React 和 Vue 做优化的前提是“放弃了最优解“，本质上是一种权衡，有利有弊。
+
+    倘若这个算法用到别的行业，比如医药行业，肯定是不行的，为什么？
+
+    React 和 Vue 做的假设是：
+
+    - 检测 VDOM 的变化只发生在同一层
+
+    - 检测 VDOM 的变化依赖于用户指定的 key
+
+    如果变化发生在不同层或者同样的元素用户指定了不同的 key 或者不同元素用户指定同样的 key， React 和 Vue 都不会检测到，就会发生莫名其妙的问题。
+
+    但是 React 认为， 前端碰到上面的第一种情况概率很小，第二种情况又可以通过提示用户，让用户去解决，因此 这个取舍是值得的。 没有牺牲空间复杂度，却换来了在大多数情况下时间上的巨大提升。 明智的选择！
+
+13. ### vue 渲染大量数据时应该怎么优化？
+
+    - 冻结数组
+    - 虚拟列表
+    - 分页
+
+14. ### vue 如何优化首页的加载速度？vue 首页白屏是什么问题引起的？如何解决呢？
+
+    单页面应用的 html 是靠 js 生成，因为首屏需要加载很大的 js 文件(app.js vendor.js)，所以当网速差的时候会产生一定程度的白屏
+
+    1. 使用首屏 SSR + 跳转 SPA 方式来优化
+    2. 改单页应用为多页应用，需要修改 webpack 的 entry
+    3. 改成多页以后使用应该使用 prefetch 的就使用
+    4. 处理加载的时间片，合理安排加载顺序，尽量不要有大面积空隙
+    5. CDN 资源还是很重要的，最好分开，也能减少一些不必要的资源损耗
+    6. 使用 Quicklink，在网速好的时候 可以帮助你预加载页面资源
+    7. 骨架屏这种的用户体验的东西一定要上，最好借助 stream 先将这部分输出给浏览器解析
+    8. 合理使用 web worker 优化一些计算
+    9. 缓存一定要使用，但是请注意合理使用
+    10. 大概就这么多，最后可以借助一些工具进行性能评测，重点调优，例如使用 performance 自己实现下等
+
+15. ### vue 是如何对数组方法进行变异的？例如 push、pop、splice 等方法
+
+    简单来讲，重写了数组中的那些方法，首先获取到这个数组的**ob**,也就是它的 Observer 对象，如果有新的值，就调用 observeArray 继续对新的值观察变化，然后手动调用 notify，通知渲染 watcher，执行 update
+
+    ```JS
+    const arrayProto = Array.prototype
+    export const arrayMethods = Object.create(arrayProto)
+    const methodsToPatch = [
+    'push',
+    'pop',
+    'shift',
+    'unshift',
+    'splice',
+    'sort',
+    'reverse'
+    ]
+
+    /**
+     * Intercept mutating methods and emit events
+    */
+    methodsToPatch.forEach(function (method) {
+    // cache original method
+    const original = arrayProto[method]
+    def(arrayMethods, method, function mutator (...args) {
+        const result = original.apply(this, args)
+        const ob = this.__ob__
+        let inserted
+        switch (method) {
+        case 'push':
+        case 'unshift':
+            inserted = args
+            break
+        case 'splice':
+            inserted = args.slice(2)
+            break
+        }
+        if (inserted) ob.observeArray(inserted)
+        // notify change
+        ob.dep.notify()
+        return result
+    })
+    })
+    ```
+
+16. ### 谈一谈 nextTick 的原理
+
+    js 事件机制
+
+17. ### Vue 中的 computed 是如何实现的（腾讯、平安）
+
+    实质是一个惰性的 watcher，在取值操作时根据自身标记 dirty 属性返回上一次计算结果/重新计算值 在创建时就进行一次取值操作，收集依赖变动的对象/属性(将自身压入 dep 中) 在依赖的对象/属性变动时，仅将自身标记 dirty 致为 true
+
+18. ### Vue 中的 computed 和 watch 的区别在哪里（虾皮）
+
+    computed：计算属性
+
+    计算属性是由 data 中的已知值，得到的一个新值。 这个新值只会根据已知值的变化而变化，其他不相关的数据的变化不会影响该新值。 计算属性不在 data 中，计算属性新值的相关已知值在 data 中。 别人变化影响我自己。 watch：监听数据的变化
+
+    监听 data 中数据的变化 监听的数据就是 data 中的已知值 我的变化影响别人
+
+    1. watch 擅长处理的场景：一个数据影响多个数据
+
+    2. computed 擅长处理的场景：一个数据受多个数据影响
+
+19. ### v-if、v-show、v-html 的原理是什么，它是如何封装的？
+
+    v-if 会调用 addIfCondition 方法，生成 vnode 的时候会忽略对应节点，render 的时候就不会渲染；
+
+    v-show 会生成 vnode，render 的时候也会渲染成真实节点，只是在 render 过程中会在节点的属性中修改 show 属性值，也就是常说的 display；
+
+    v-html 会先移除节点下的所有节点，调用 html 方法，通过 addProp 添加 innerHTML 属性，归根结底还是设置 innerHTML 为 v-html 的值
+
+    目录
+    [题目来源](https://juejin.im/post/59ffb4b66fb9a04512385402)
 
 ## Vue 使用
 

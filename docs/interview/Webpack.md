@@ -895,6 +895,32 @@ vw
 
 [https://juejin.im/post/5d33fd0f5188256e820c80d4](https://link)
 
-```
+## 工程
 
-```
+### 01. 介绍下 npm 模块安装机制，为什么输入 npm install 就可以自动安装对应的模块？
+
+[text](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/22)
+
+### 02. 介绍下 webpack 热更新原理，是如何做到在不刷新浏览器的前提下更新页面的
+
+    1.当修改了一个或多个文件；
+    2.文件系统接收更改并通知webpack；
+    3.webpack重新编译构建一个或多个模块，并通知HMR服务器进行更新；
+    4.HMR Server 使用webSocket通知HMR runtime 需要更新，HMR运行时通过HTTP请求更新jsonp；
+    5.HMR运行时替换更新中的模块，如果确定这些模块无法更新，则触发整个页面刷新。
+
+### 03. webpack 打包 vue 速度太慢怎么办？
+
+    缓存
+    happypack多进程进行
+    loader范围缩小到src项目文件！一些不必要的loader能关就关了吧
+    动态链接库（DllPlugin）
+    配置webpack的externals
+
+### 04. webpack 中 loader 和 plugin 的区别是什么（平安）
+
+    loader，它是一个转换器，将A文件进行编译成B文件，比如：将A.less转换为A.css，单纯的文件转换过程。
+
+    plugin是一个扩展器，它丰富了webpack本身，针对是loader结束后，webpack打包的整个过程，它并不直接操作文件，而是基于事件机制工作，会监听webpack打包过程中的某些节点，执行广泛的任务
+
+### 05. babel 怎么把字符串解析成 AST，是怎么进行词法/语法分析的？
