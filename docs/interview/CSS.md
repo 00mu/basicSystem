@@ -207,10 +207,8 @@ display: -webkit-box;
 ```CSS
 .wp {
     display: grid;
-}
-.box {
-    align-self: center;
-    justify-self: center;
+    justify-content: center;
+    align-content: center;
 }
 ```
 
@@ -286,3 +284,82 @@ CSS 动画比 JS 流畅的前提：
 - 如果您需要手动协调整个场景，可直接使用 requestAnimationFrame
 
 使用 JavaScript 动画，您可以完全控制元素在每个步骤的样式。这意味着您可以在您认为合适时减慢动画、暂停动画、停止动画、倒退动画和操纵元素。如果您正在构建复杂的对象导向型应用，则此方法特别有用，因为您可以正确封装您的行为。
+
+### 04. CSS 权重翻车
+
+> 这道题我翻车了，非常汗颜。。。
+
+选择器的权重链：
+
+important >> 行内 style >> ID >> class(属性选择器、伪类选择器) >> tag >> \*(通配符) >> 继承
+
+第一个重点：请注意这里的 `>>` ，意在表明不同级别的选择器的权重无法进行数字上的比较，比如无论多少个 class 叠加都无法超过 ID 选择器的权重，底层永远不可能重置上面层次的样式
+
+常见的权重表的误导：
+
+| 选择器    | 权重值 |
+| --------- | ------ |
+| important | 1000   |
+| id        | 100    |
+| class     | 10     |
+| tag       | 1      |
+
+很容易误解为 11 个 class 就能超越 id，再次重申这是错误的！！！
+
+这张表数值的唯一作用在于，同级别的比较才有叠加计算的意义
+
+```HTML
+<div class="a1">
+    <div class="a2">颜色</div>
+</div>
+```
+
+```CSS
+/* 继承 */
+body{
+    color: black;
+}
+/* 此时是黑色 */
+
+*{
+    color: green;
+}
+/* 重置以上，颜色为绿色 */
+
+/* tag */
+div{
+    color: blue;
+}
+/* 重置以上，颜色为蓝色 */
+
+/* 伪类 */
+:first-child{
+    color: red;
+}
+/* 重置以上，颜色为红色 */
+```
+
+```CSS
+/* 后代 */
+.a1 .a2{
+    color: green;
+}
+/* 子 */
+.a1>.a2{
+    color: white;
+}
+/* 自身叠加 */
+.a2.a2{
+    color: red;
+}
+/* 伪类 */
+.a2:first-child{
+    color: blue;
+}
+/* 属性 */
+.a1 [class="a2"]{
+    color: black;
+}
+```
+
+以上 5 中选择器的权重是一样的，谁在后面谁生效

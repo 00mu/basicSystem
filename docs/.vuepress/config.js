@@ -85,9 +85,10 @@ module.exports = {
         "Http",
         "performance",
         "webpack",
-        "HTML",
+        // "HTML",
         "CSS",
         "JS",
+        "vue",
       ],
 
       "/mvvm/": [],
