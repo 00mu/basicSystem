@@ -59,9 +59,9 @@
 
     派发更新 setter（重点关注以下两点）
 
-    *childOb = !shallow && observe(newVal) // 如果 shallow 为 false 的情况，会对新设置的值变成一个响应式对象
-    *dep.notify() // 通知所有订阅者
-    派发过程：当我们组件中对响应的数据做了修改，就会触发 setter 的逻辑，最后调用 dep.notify()方法，它是 Dep 的一个实例方法。具体做法是遍历依赖收集中建立的 subs，也就是 Watcher 的实例数组【subs 数组在依赖收集 getter 中被添加，期间通过一些逻辑处理判断保证同一数据不会被添加多次】，然后调用每一个 watcher 的 update 方法。
+    - childOb = !shallow && observe(newVal) // 如果 shallow 为 false 的情况，会对新设置的值变成一个响应式对象
+    - dep.notify() // 通知所有订阅者
+      派发过程：当我们组件中对响应的数据做了修改，就会触发 setter 的逻辑，最后调用 dep.notify()方法，它是 Dep 的一个实例方法。具体做法是遍历依赖收集中建立的 subs，也就是 Watcher 的实例数组【subs 数组在依赖收集 getter 中被添加，期间通过一些逻辑处理判断保证同一数据不会被添加多次】，然后调用每一个 watcher 的 update 方法。
 
     update 函数中有个 queueWatcher(this)方法引入了队列的概念，是 vue 在做派发更新时优化的一个点，它并不会每次数据改变都会触发 watcher 回调，而是把这些 watcher 先添加到一个队列中，然后在 nextTick 后执行 watcher 的 run 函数
 
