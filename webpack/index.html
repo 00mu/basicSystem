@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>webpack 入门 | WEB 前端基础体系梳理</title>
+    <meta name="description" content="进化中...">
+    <meta name="generator" content="VuePress 1.4.0">
+    
+    
+    <link rel="preload" href="/basicSystem/assets/css/0.styles.978a8c4c.css" as="style"><link rel="preload" href="/basicSystem/assets/js/app.fe57eed6.js" as="script"><link rel="preload" href="/basicSystem/assets/js/3.40885dd2.js" as="script"><link rel="preload" href="/basicSystem/assets/js/58.4ffe555a.js" as="script"><link rel="prefetch" href="/basicSystem/assets/js/10.8f192e07.js"><link rel="prefetch" href="/basicSystem/assets/js/11.70ea7752.js"><link rel="prefetch" href="/basicSystem/assets/js/12.aff4d014.js"><link rel="prefetch" href="/basicSystem/assets/js/13.0bf7b953.js"><link rel="prefetch" href="/basicSystem/assets/js/14.965f889e.js"><link rel="prefetch" href="/basicSystem/assets/js/15.54ac762d.js"><link rel="prefetch" href="/basicSystem/assets/js/16.6b7d15a8.js"><link rel="prefetch" href="/basicSystem/assets/js/17.4f9c33ec.js"><link rel="prefetch" href="/basicSystem/assets/js/18.e7829a1b.js"><link rel="prefetch" href="/basicSystem/assets/js/19.a14098a6.js"><link rel="prefetch" href="/basicSystem/assets/js/20.9cdf8898.js"><link rel="prefetch" href="/basicSystem/assets/js/21.52406625.js"><link rel="prefetch" href="/basicSystem/assets/js/22.5a250bd9.js"><link rel="prefetch" href="/basicSystem/assets/js/23.b68348d6.js"><link rel="prefetch" href="/basicSystem/assets/js/24.06a02506.js"><link rel="prefetch" href="/basicSystem/assets/js/25.09a10bf9.js"><link rel="prefetch" href="/basicSystem/assets/js/26.298e26d0.js"><link rel="prefetch" href="/basicSystem/assets/js/27.ba9538a8.js"><link rel="prefetch" href="/basicSystem/assets/js/28.4f67f474.js"><link rel="prefetch" href="/basicSystem/assets/js/29.4bea42c4.js"><link rel="prefetch" href="/basicSystem/assets/js/30.90e696e0.js"><link rel="prefetch" href="/basicSystem/assets/js/31.69c8c548.js"><link rel="prefetch" href="/basicSystem/assets/js/32.5309047d.js"><link rel="prefetch" href="/basicSystem/assets/js/33.5b269816.js"><link rel="prefetch" href="/basicSystem/assets/js/34.90d75a26.js"><link rel="prefetch" href="/basicSystem/assets/js/35.e1f8a67a.js"><link rel="prefetch" href="/basicSystem/assets/js/36.1224f9ef.js"><link rel="prefetch" href="/basicSystem/assets/js/37.514fe7f4.js"><link rel="prefetch" href="/basicSystem/assets/js/38.8691a21e.js"><link rel="prefetch" href="/basicSystem/assets/js/39.43c15237.js"><link rel="prefetch" href="/basicSystem/assets/js/4.616c069e.js"><link rel="prefetch" href="/basicSystem/assets/js/40.341eebc6.js"><link rel="prefetch" href="/basicSystem/assets/js/41.61141311.js"><link rel="prefetch" href="/basicSystem/assets/js/42.096b0e5b.js"><link rel="prefetch" href="/basicSystem/assets/js/43.08c8940b.js"><link rel="prefetch" href="/basicSystem/assets/js/44.972fa1ee.js"><link rel="prefetch" href="/basicSystem/assets/js/45.18b164ae.js"><link rel="prefetch" href="/basicSystem/assets/js/46.c5084eb9.js"><link rel="prefetch" href="/basicSystem/assets/js/47.5a081ac6.js"><link rel="prefetch" href="/basicSystem/assets/js/48.1dfe435d.js"><link rel="prefetch" href="/basicSystem/assets/js/49.9591def2.js"><link rel="prefetch" href="/basicSystem/assets/js/5.75c0cb05.js"><link rel="prefetch" href="/basicSystem/assets/js/50.42d39276.js"><link rel="prefetch" href="/basicSystem/assets/js/51.2ce3513a.js"><link rel="prefetch" href="/basicSystem/assets/js/52.7d8bbb55.js"><link rel="prefetch" href="/basicSystem/assets/js/53.a9481449.js"><link rel="prefetch" href="/basicSystem/assets/js/54.cdf677e4.js"><link rel="prefetch" href="/basicSystem/assets/js/55.19599d18.js"><link rel="prefetch" href="/basicSystem/assets/js/56.f10f47fa.js"><link rel="prefetch" href="/basicSystem/assets/js/57.e3bb2ba8.js"><link rel="prefetch" href="/basicSystem/assets/js/59.a549b1ff.js"><link rel="prefetch" href="/basicSystem/assets/js/6.2dd188fc.js"><link rel="prefetch" href="/basicSystem/assets/js/7.6a47198c.js"><link rel="prefetch" href="/basicSystem/assets/js/8.da290d25.js"><link rel="prefetch" href="/basicSystem/assets/js/9.b8c11fc3.js"><link rel="prefetch" href="/basicSystem/assets/js/vendors~docsearch.a3318253.js">
+    <link rel="stylesheet" href="/basicSystem/assets/css/0.styles.978a8c4c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/basicSystem/" class="home-link router-link-active"><!----> <span class="site-name">WEB 前端基础体系梳理</span></a> <div class="links"><form id="search-form" role="search" class="algolia-search-wrapper search-box"><input id="algolia-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="手稿" class="dropdown-title"><span class="title">手稿</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          基础语法
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/JavaScript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/HTML/" class="nav-link">
+  HTML
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/CSS/" class="nav-link">
+  CSS
+</a></li></ul></li><li class="dropdown-item"><h4>
+          MVVM
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/mvvm/VUE/" class="nav-link">
+  VUE
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/React/" class="nav-link">
+  React
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/Electron/" class="nav-link">
+  Electron
+</a></li></ul></li><li class="dropdown-item"><h4>
+          前端工程
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/webpack/" class="nav-link router-link-exact-active router-link-active">
+  webpack
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="/basicSystem/deepLearning/" class="nav-link">
+  专题
+</a></div><div class="nav-item"><a href="/basicSystem/coding/" class="nav-link">
+  Coding
+</a></div><div class="nav-item"><a href="/basicSystem/interview/" class="nav-link">
+  考点
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          编辑器
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/soft/git.html" class="nav-link">
+  GIT
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/soft/vscode/" class="nav-link">
+  VSCODE
+</a></li></ul></li><li class="dropdown-item"><h4>
+          效率工具
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/webpack/figma.com.html" class="nav-link">
+  figma
+</a></li></ul></li></ul></div></div> <a href="https://github.com/bbzz/basicSystem" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="手稿" class="dropdown-title"><span class="title">手稿</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          基础语法
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/JavaScript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/HTML/" class="nav-link">
+  HTML
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/CSS/" class="nav-link">
+  CSS
+</a></li></ul></li><li class="dropdown-item"><h4>
+          MVVM
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/mvvm/VUE/" class="nav-link">
+  VUE
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/React/" class="nav-link">
+  React
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/Electron/" class="nav-link">
+  Electron
+</a></li></ul></li><li class="dropdown-item"><h4>
+          前端工程
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/webpack/" class="nav-link router-link-exact-active router-link-active">
+  webpack
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="/basicSystem/deepLearning/" class="nav-link">
+  专题
+</a></div><div class="nav-item"><a href="/basicSystem/coding/" class="nav-link">
+  Coding
+</a></div><div class="nav-item"><a href="/basicSystem/interview/" class="nav-link">
+  考点
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          编辑器
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/soft/git.html" class="nav-link">
+  GIT
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/soft/vscode/" class="nav-link">
+  VSCODE
+</a></li></ul></li><li class="dropdown-item"><h4>
+          效率工具
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/webpack/figma.com.html" class="nav-link">
+  figma
+</a></li></ul></li></ul></div></div> <a href="https://github.com/bbzz/basicSystem" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/basicSystem/" class="sidebar-link">前言</a></li><li><a href="/basicSystem/coding/" class="sidebar-link">1000+ CODING 计划</a></li><li><a href="/basicSystem/deepLearning/" class="sidebar-link">百篇专题计划</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="webpack-入门"><a href="#webpack-入门" class="header-anchor">#</a> webpack 入门</h1> <p>JS 静态模块打包工具，内部构建一个<strong>依赖图</strong>映射项目所需的每个模块，并生成多个 <code>bundle。</code></p> <p>以下为和新概念</p> <h2 id="入口-entry"><a href="#入口-entry" class="header-anchor">#</a> 入口 entry</h2> <h3 id="intro"><a href="#intro" class="header-anchor">#</a> intro</h3> <p>指示 webpack 应该使用哪个模块，开作为构建 依赖图的开始。会找出哪个模块和库是入口起点（直接/间接）依赖的。</p> <p><code>_webpack.config.js_</code></p> <h3 id="单个入口"><a href="#单个入口" class="header-anchor">#</a> 单个入口</h3> <div class="language-JS extra-class"><pre class="language-js"><code><span class="token comment">// 单个文件入口语法</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token string">'./path/to/my/entry/file.js'</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">// 等价</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token punctuation">{</span>
+    main<span class="token operator">:</span> <span class="token string">'./path/to/my/entry/file.js'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">// 一次注入多个依赖文件，并将他们导向一个chunk时，可以使用数组</span>
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'./path/to/my/entry/file.js'</span><span class="token punctuation">,</span> <span class="token string">'./path/to/my/entry/file2.js'</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//</span>
+</code></pre></div><h3 id="对象语法"><a href="#对象语法" class="header-anchor">#</a> 对象语法</h3> <div class="language-JS extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token punctuation">{</span>
+    app<span class="token operator">:</span> <span class="token string">'./src/app.js'</span><span class="token punctuation">,</span>
+    adminApp<span class="token operator">:</span> <span class="token string">'./src/adminApp.js'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="分离-app-和-vendor-第三方库-入口"><a href="#分离-app-和-vendor-第三方库-入口" class="header-anchor">#</a> 分离 app 和 vendor[第三方库]入口</h3> <p>在 <code>webpack &lt; 4</code> 的版本中，通常将 <code>vendor</code> 作为单独的入口起点添加到 <code>entry</code> 选项中，以将其编译为单独的文件（与 <code>CommonsChunkPlugin</code> 结合使用）。而在 webpack 4 中不鼓励这样做。<strong>而是使用 optimization.splitChunks 选项，将 vendor 和 app(应用程序) 模块分开，并为其创建一个单独的文件。不要 为 vendor 或其他不是执行起点创建 entry。</strong></p> <h3 id="多页面应用程序"><a href="#多页面应用程序" class="header-anchor">#</a> 多页面应用程序</h3> <div class="language-JS extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token punctuation">{</span>
+    pageOne<span class="token operator">:</span> <span class="token string">'./src/pageOne/index.js'</span><span class="token punctuation">,</span>
+    pageTwo<span class="token operator">:</span> <span class="token string">'./src/pageTwo/index.js'</span><span class="token punctuation">,</span>
+    pageThree<span class="token operator">:</span> <span class="token string">'./src/pageThree/index.js'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>使用 optimization.splitChunks 为页面间共享的应用程序代码创建 bundle。由于入口起点增多，多页应用能够复用入口起点之间的大量代码/模块，从而可以极大地从这些技术中受益。</p> <h2 id="输出-output"><a href="#输出-output" class="header-anchor">#</a> 输出 output</h2> <p>utput 属性告诉 webpack 在哪里输出它所创建的 bundle，以及如何命名这些文件。主要输出文件的默认值是 ./dist/main.js，其他生成文件默认放置在 ./dist 文件夹中</p> <div class="language-JS extra-class"><pre class="language-js"><code><span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  entry<span class="token operator">:</span> <span class="token string">'./path/to/my/entry/file.js'</span><span class="token punctuation">,</span>
+  output<span class="token operator">:</span> <span class="token punctuation">{</span>
+    path<span class="token operator">:</span> path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">'dist'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    filename<span class="token operator">:</span> <span class="token string">'my-first-webpack.bundle.js'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="模式-mode"><a href="#模式-mode" class="header-anchor">#</a> 模式 mode</h2> <p>提供 mode 配置选项，告知 webpack 使用相应环境的内置优化</p> <div class="language-JS extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  mode<span class="token operator">:</span> <span class="token string">'production'</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="loader"><a href="#loader" class="header-anchor">#</a> loader</h2> <p>在 import 时预处理文件。
+将不同于语言转换为 Javascript，图像转换为 dataUrl。
+描述了如何处理非 js 模块，并在 bundle 中引入这些依赖。</p> <div class="language-JS extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  module<span class="token operator">:</span> <span class="token punctuation">{</span>
+    rules<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token punctuation">{</span> test<span class="token operator">:</span> <span class="token regex">/\.css$/</span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token string">'css-loader'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span> test<span class="token operator">:</span> <span class="token regex">/\.ts$/</span><span class="token punctuation">,</span> use<span class="token operator">:</span> <span class="token string">'ts-loader'</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>通过（<code>loader</code>）预处理函数，<code>loader</code> 为 JavaScript 生态系统提供了更多能力。 用户现在可以更加灵活地引入细粒度逻辑，例如：压缩、打包、语言翻译。。。</p> <p>各种语言的 <code>loader</code></p> <ul><li>CoffeeScript</li> <li>TypeScript</li> <li>ESNext (Babel)</li> <li>Sass</li> <li>Less</li> <li>Stylus</li></ul> <h2 id="插件-plugin"><a href="#插件-plugin" class="header-anchor">#</a> 插件 plugin</h2> <p>插件是支柱功能。<code>webpack</code> 自身也是构建于，你在 <code>webpack</code> 配置中用到的相同的插件系统之上！</p> <h2 id="module"><a href="#module" class="header-anchor">#</a> module</h2> <p>在 模块化编程 中，开发者将程序分解为功能离散的 <code>chunk(discrete chunks of functionality)</code>，并称之为<em>模块</em>。</p> <p>每个模块具有比完整程序更小的接触面，使得验证、调试、测试轻而易举。 精心编写的<em>模块</em>提供了可靠的抽象和封装界限，使得应用程序中每个模块，都具备了条理清楚的设计和明确的目的。</p> <p><code>webpack</code> <em>模块</em>能够以各种方式表达它们的依赖关系。下面是一些示例：</p> <p>-<code>ES2015 import</code> 语句</p> <ul><li><code>CommonJS require()</code> 语句</li> <li><code>AMD define 和 require</code> 语句</li> <li><code>css/sass/less</code> 文件中的 <code>@import</code> 语句。</li> <li>样式(<code>url(...)</code>)或 HTML 文件(<code>&lt;img src=...&gt;</code>)中的图片链接</li></ul> <h2 id="模块解析"><a href="#模块解析" class="header-anchor">#</a> 模块解析</h2> <p><code>resolver</code> 是一个库(<code>library</code>)，用于帮助找到模块的绝对路径。 一个模块可以作为另一个模块的依赖模块，然后被后者引用</p> <h2 id="manifest"><a href="#manifest" class="header-anchor">#</a> manifest</h2> <p><code>webpack</code> 的 <code>runtime</code> 和 <code>manifest</code>，管理所有模块的交互。
+如果要通过浏览器缓存改善性能，那么 <code>manifest</code> 将至关重要。</p> <p>webpack 如何管理所有所需模块之间的交互呢？这就是 <code>manifest</code> 数据用途的由来……</p> <h3 id="runtime"><a href="#runtime" class="header-anchor">#</a> <code>runtime</code></h3> <p><code>runtime</code>，以及伴随的 <code>manifest</code> 数据，主要是指：在浏览器运行过程中，webpack 用来连接模块化应用程序所需的所有代码。它包含：在模块交互时，连接模块所需的加载和解析逻辑。包括：已经加载到浏览器中的连接模块逻辑，以及尚未加载模块的延迟加载逻辑。</p> <h2 id="部署目标（target）"><a href="#部署目标（target）" class="header-anchor">#</a> 部署目标（target）</h2> <p>最终的运行环境
+默认是 web</p> <div class="language-JS extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  target<span class="token operator">:</span> <span class="token string">'node'</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="模块热替换-hot-module-replacement（hmr）"><a href="#模块热替换-hot-module-replacement（hmr）" class="header-anchor">#</a> 模块热替换 <code>hot module replacement</code>（HMR）</h2> <p>修改模块无需加载整个页面</p> <h2 id="浏览器兼容性"><a href="#浏览器兼容性" class="header-anchor">#</a> 浏览器兼容性</h2> <p><code>webpack</code> 支持所有符合 <code>ES5</code> 标准 的浏览器（不支持 IE8 及以下版本）。<code>webpack</code> 的 <code>import()</code> 和 <code>require.ensure()</code> 需要 <code>Promise</code>。如果你想要支持旧版本浏览器，在使用这些表达式之前，还需要 提前加载 <code>polyfill</code></p> <p>在安装一个 <code>package</code>，而此 <code>package</code> 要打包到生产环境 <code>bundle</code> 中时，你应该使用 <code>npm install --save</code>。如果你在安装一个用于开发环境目的的 <code>package</code> 时（例如，<code>linter</code>, 测试库等），你应该使用 <code>npm install --save-dev</code></p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/bbzz/basicSystem/edit/master/docs/webpack/readme.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/5/2020, 9:43:58 AM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/basicSystem/assets/js/app.fe57eed6.js" defer></script><script src="/basicSystem/assets/js/3.40885dd2.js" defer></script><script src="/basicSystem/assets/js/58.4ffe555a.js" defer></script>
+  </body>
+</html>

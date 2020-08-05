@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>06 浏览器渲染原理 | WEB 前端基础体系梳理</title>
+    <meta name="description" content="进化中...">
+    <meta name="generator" content="VuePress 1.4.0">
+    
+    
+    <link rel="preload" href="/basicSystem/assets/css/0.styles.978a8c4c.css" as="style"><link rel="preload" href="/basicSystem/assets/js/app.fe57eed6.js" as="script"><link rel="preload" href="/basicSystem/assets/js/3.40885dd2.js" as="script"><link rel="preload" href="/basicSystem/assets/js/25.09a10bf9.js" as="script"><link rel="prefetch" href="/basicSystem/assets/js/10.8f192e07.js"><link rel="prefetch" href="/basicSystem/assets/js/11.70ea7752.js"><link rel="prefetch" href="/basicSystem/assets/js/12.aff4d014.js"><link rel="prefetch" href="/basicSystem/assets/js/13.0bf7b953.js"><link rel="prefetch" href="/basicSystem/assets/js/14.965f889e.js"><link rel="prefetch" href="/basicSystem/assets/js/15.54ac762d.js"><link rel="prefetch" href="/basicSystem/assets/js/16.6b7d15a8.js"><link rel="prefetch" href="/basicSystem/assets/js/17.4f9c33ec.js"><link rel="prefetch" href="/basicSystem/assets/js/18.e7829a1b.js"><link rel="prefetch" href="/basicSystem/assets/js/19.a14098a6.js"><link rel="prefetch" href="/basicSystem/assets/js/20.9cdf8898.js"><link rel="prefetch" href="/basicSystem/assets/js/21.52406625.js"><link rel="prefetch" href="/basicSystem/assets/js/22.5a250bd9.js"><link rel="prefetch" href="/basicSystem/assets/js/23.b68348d6.js"><link rel="prefetch" href="/basicSystem/assets/js/24.06a02506.js"><link rel="prefetch" href="/basicSystem/assets/js/26.298e26d0.js"><link rel="prefetch" href="/basicSystem/assets/js/27.ba9538a8.js"><link rel="prefetch" href="/basicSystem/assets/js/28.4f67f474.js"><link rel="prefetch" href="/basicSystem/assets/js/29.4bea42c4.js"><link rel="prefetch" href="/basicSystem/assets/js/30.90e696e0.js"><link rel="prefetch" href="/basicSystem/assets/js/31.69c8c548.js"><link rel="prefetch" href="/basicSystem/assets/js/32.5309047d.js"><link rel="prefetch" href="/basicSystem/assets/js/33.5b269816.js"><link rel="prefetch" href="/basicSystem/assets/js/34.90d75a26.js"><link rel="prefetch" href="/basicSystem/assets/js/35.e1f8a67a.js"><link rel="prefetch" href="/basicSystem/assets/js/36.1224f9ef.js"><link rel="prefetch" href="/basicSystem/assets/js/37.514fe7f4.js"><link rel="prefetch" href="/basicSystem/assets/js/38.8691a21e.js"><link rel="prefetch" href="/basicSystem/assets/js/39.43c15237.js"><link rel="prefetch" href="/basicSystem/assets/js/4.616c069e.js"><link rel="prefetch" href="/basicSystem/assets/js/40.341eebc6.js"><link rel="prefetch" href="/basicSystem/assets/js/41.61141311.js"><link rel="prefetch" href="/basicSystem/assets/js/42.096b0e5b.js"><link rel="prefetch" href="/basicSystem/assets/js/43.08c8940b.js"><link rel="prefetch" href="/basicSystem/assets/js/44.972fa1ee.js"><link rel="prefetch" href="/basicSystem/assets/js/45.18b164ae.js"><link rel="prefetch" href="/basicSystem/assets/js/46.c5084eb9.js"><link rel="prefetch" href="/basicSystem/assets/js/47.5a081ac6.js"><link rel="prefetch" href="/basicSystem/assets/js/48.1dfe435d.js"><link rel="prefetch" href="/basicSystem/assets/js/49.9591def2.js"><link rel="prefetch" href="/basicSystem/assets/js/5.75c0cb05.js"><link rel="prefetch" href="/basicSystem/assets/js/50.42d39276.js"><link rel="prefetch" href="/basicSystem/assets/js/51.2ce3513a.js"><link rel="prefetch" href="/basicSystem/assets/js/52.7d8bbb55.js"><link rel="prefetch" href="/basicSystem/assets/js/53.a9481449.js"><link rel="prefetch" href="/basicSystem/assets/js/54.cdf677e4.js"><link rel="prefetch" href="/basicSystem/assets/js/55.19599d18.js"><link rel="prefetch" href="/basicSystem/assets/js/56.f10f47fa.js"><link rel="prefetch" href="/basicSystem/assets/js/57.e3bb2ba8.js"><link rel="prefetch" href="/basicSystem/assets/js/58.4ffe555a.js"><link rel="prefetch" href="/basicSystem/assets/js/59.a549b1ff.js"><link rel="prefetch" href="/basicSystem/assets/js/6.2dd188fc.js"><link rel="prefetch" href="/basicSystem/assets/js/7.6a47198c.js"><link rel="prefetch" href="/basicSystem/assets/js/8.da290d25.js"><link rel="prefetch" href="/basicSystem/assets/js/9.b8c11fc3.js"><link rel="prefetch" href="/basicSystem/assets/js/vendors~docsearch.a3318253.js">
+    <link rel="stylesheet" href="/basicSystem/assets/css/0.styles.978a8c4c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/basicSystem/" class="home-link router-link-active"><!----> <span class="site-name">WEB 前端基础体系梳理</span></a> <div class="links"><form id="search-form" role="search" class="algolia-search-wrapper search-box"><input id="algolia-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="手稿" class="dropdown-title"><span class="title">手稿</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          基础语法
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/JavaScript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/HTML/" class="nav-link">
+  HTML
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/CSS/" class="nav-link">
+  CSS
+</a></li></ul></li><li class="dropdown-item"><h4>
+          MVVM
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/mvvm/VUE/" class="nav-link">
+  VUE
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/React/" class="nav-link">
+  React
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/Electron/" class="nav-link">
+  Electron
+</a></li></ul></li><li class="dropdown-item"><h4>
+          前端工程
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/webpack/" class="nav-link">
+  webpack
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="/basicSystem/deepLearning/" class="nav-link router-link-active">
+  专题
+</a></div><div class="nav-item"><a href="/basicSystem/coding/" class="nav-link">
+  Coding
+</a></div><div class="nav-item"><a href="/basicSystem/interview/" class="nav-link">
+  考点
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          编辑器
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/soft/git.html" class="nav-link">
+  GIT
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/soft/vscode/" class="nav-link">
+  VSCODE
+</a></li></ul></li><li class="dropdown-item"><h4>
+          效率工具
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/deepLearning/figma.com.html" class="nav-link">
+  figma
+</a></li></ul></li></ul></div></div> <a href="https://github.com/bbzz/basicSystem" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="手稿" class="dropdown-title"><span class="title">手稿</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          基础语法
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/JavaScript/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/HTML/" class="nav-link">
+  HTML
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/basic/CSS/" class="nav-link">
+  CSS
+</a></li></ul></li><li class="dropdown-item"><h4>
+          MVVM
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/mvvm/VUE/" class="nav-link">
+  VUE
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/React/" class="nav-link">
+  React
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/mvvm/Electron/" class="nav-link">
+  Electron
+</a></li></ul></li><li class="dropdown-item"><h4>
+          前端工程
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/webpack/" class="nav-link">
+  webpack
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="/basicSystem/deepLearning/" class="nav-link router-link-active">
+  专题
+</a></div><div class="nav-item"><a href="/basicSystem/coding/" class="nav-link">
+  Coding
+</a></div><div class="nav-item"><a href="/basicSystem/interview/" class="nav-link">
+  考点
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="工具" class="dropdown-title"><span class="title">工具</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          编辑器
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/soft/git.html" class="nav-link">
+  GIT
+</a></li><li class="dropdown-subitem"><a href="/basicSystem/soft/vscode/" class="nav-link">
+  VSCODE
+</a></li></ul></li><li class="dropdown-item"><h4>
+          效率工具
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/basicSystem/deepLearning/figma.com.html" class="nav-link">
+  figma
+</a></li></ul></li></ul></div></div> <a href="https://github.com/bbzz/basicSystem" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/basicSystem/deepLearning/" class="sidebar-link">百篇专题计划</a></li><li><a href="/basicSystem/deepLearning/conversion.html" class="sidebar-link">01 数据类型转换</a></li><li><a href="/basicSystem/deepLearning/scope.html" class="sidebar-link">02 函数作用域与闭包</a></li><li><a href="/basicSystem/deepLearning/prototype.html" class="sidebar-link">03 原型与原型链</a></li><li><a href="/basicSystem/deepLearning/this.html" class="sidebar-link">04 this、call、apply、bind</a></li><li><a href="/basicSystem/deepLearning/eventLoop.html" class="sidebar-link">05 JavaScript 运行机制</a></li><li><a href="/basicSystem/deepLearning/render.html" class="active sidebar-link">06 浏览器渲染原理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/basicSystem/deepLearning/render.html#_1-发送一个-http-请求" class="sidebar-link">1. 发送一个 HTTP 请求</a></li><li class="sidebar-sub-header"><a href="/basicSystem/deepLearning/render.html#_2-服务器接收到请求" class="sidebar-link">2 服务器接收到请求</a></li><li class="sidebar-sub-header"><a href="/basicSystem/deepLearning/render.html#_3-解析渲染页面" class="sidebar-link">3. 解析渲染页面</a></li></ul></li><li><a href="/basicSystem/deepLearning/http.html" class="sidebar-link">待续 前后端通信</a></li><li><a href="/basicSystem/deepLearning/async.html" class="sidebar-link">待续 异步</a></li><li><a href="/basicSystem/deepLearning/cssModel.html" class="sidebar-link">待续 CSS 文档流 盒模型</a></li><li><a href="/basicSystem/deepLearning/optimization.html" class="sidebar-link">待续 性能优化</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_06-浏览器渲染原理"><a href="#_06-浏览器渲染原理" class="header-anchor">#</a> 06 浏览器渲染原理</h1> <p>接上篇，了解了 JS 运行机制再来看渲染流程水到渠成。</p> <p>从一道网红题开始...</p> <blockquote><p>从输入 URL 到页面加载发生了什么?</p></blockquote> <p>这将是一篇长文，这个主题很合适用来梳理自己的知识体系。大致按照这个顺序进行：DNS 查询=》TCP 连接=》HTTP 请求=》服务器响应=》客户端渲染</p> <h2 id="_1-发送一个-http-请求"><a href="#_1-发送一个-http-请求" class="header-anchor">#</a> 1. 发送一个 HTTP 请求</h2> <h4 id="_1-1-浏览器"><a href="#_1-1-浏览器" class="header-anchor">#</a> 1.1 浏览器</h4> <p>浏览器进程包含：主进程（Browser 进程）、插件进程、GPU 进程、浏览器渲染进程（内核）。
+渲染进程包含：GUI 线程、JS 引擎线程、事件触发线程、定时器线程、网络请求线程。</p> <h4 id="_1-2-解析-url"><a href="#_1-2-解析-url" class="header-anchor">#</a> 1.2 解析 URL</h4> <p>输入 URL 后，会进行解析（URL 的本质就是统一资源定位符）</p> <p>URL 一般包括几大部分：</p> <ul><li>protocol，协议头，譬如有 http，ftp 等</li> <li>host，主机域名或 IP 地址</li> <li>port，端口号</li> <li>path，目录路径</li> <li>query，即查询参数</li> <li>fragment，即#后的 hash 值，一般用来定位到某个位置</li></ul> <h4 id="_1-3-dns-查询得到-ip"><a href="#_1-3-dns-查询得到-ip" class="header-anchor">#</a> 1.3 DNS 查询得到 IP</h4> <p>如果输入的是域名，需要进行 dns 解析成 IP，大致流程：</p> <ol><li>如果浏览器有缓存，直接使用浏览器缓存，否则使用本机缓存，再没有的话就是用 host</li> <li>如果本地没有，就向 dns 域名服务器查询（当然，中间可能还会经过路由，也有缓存等），查询到对应的 IP</li></ol> <ul><li>dns 解析是很耗时的，因此如果解析域名过多，会让首屏加载变得过慢，可以考虑 dns-prefetch 优化</li></ul> <h4 id="_1-4-客户端发起-http-请求"><a href="#_1-4-客户端发起-http-请求" class="header-anchor">#</a> 1.4 客户端发起 HTTP 请求</h4> <p>内容太多了，单拎一篇讲。
+HTTP 本质是 tcp/ip 请求。</p> <p>tcp 将 http 长报文划分为短报文，通过三次握手与服务端建立连接，进行可靠传输。</p> <h5 id="从应用层的发送-http-请求，到传输层通过三次握手建立-tcp-ip-连接，再到网络层的-ip-寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。"><a href="#从应用层的发送-http-请求，到传输层通过三次握手建立-tcp-ip-连接，再到网络层的-ip-寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。" class="header-anchor">#</a> 从应用层的发送 http 请求，到传输层通过三次握手建立 tcp/ip 连接，再到网络层的 ip 寻址，再到数据链路层的封装成帧，最后到物理层的利用物理介质传输。</h5> <h5 id="三次握手：确认彼此身份"><a href="#三次握手：确认彼此身份" class="header-anchor">#</a> 三次握手：确认彼此身份</h5> <div class="language-HTML extra-class"><pre class="language-html"><code>客户端：hello，你是server么？
+服务端：hello，我是server，你是client么
+客户端：yes，我是client
+</code></pre></div><h5 id="四次挥手：断开时，双方都要关闭通道"><a href="#四次挥手：断开时，双方都要关闭通道" class="header-anchor">#</a> 四次挥手：断开时，双方都要关闭通道</h5> <div class="language-HTML extra-class"><pre class="language-html"><code>主动方：我已经关闭了向你那边的主动通道了，只能被动接收了
+被动方：收到通道关闭的信息
+被动方：那我也告诉你，我这边向你的主动通道也关闭了
+主动方：最后收到数据，之后双方无法通信
+</code></pre></div><h5 id="tcp-ip-的并发限制"><a href="#tcp-ip-的并发限制" class="header-anchor">#</a> tcp/ip 的并发限制</h5> <p>浏览器对同一域名下并发的 tcp 连接是有限制的</p> <h5 id="get-和-post-的区别"><a href="#get-和-post-的区别" class="header-anchor">#</a> get 和 post 的区别</h5> <p>get 和 post 虽然本质都是 tcp/ip，但两者除了在 http 层面外，在 tcp/ip 层面也有区别。get 会产生一个 tcp 数据包，post 两个。</p> <ul><li>get 请求时，浏览器会把 headers 和 data 一起发送出去，服务器响应 200（返回数据）</li> <li>post 请求时，浏览器先发送 headers，服务器响应 100 continue， 浏览器再发送 data，服务器响应 200（返回数据）</li></ul> <h5 id="五层因特网协议"><a href="#五层因特网协议" class="header-anchor">#</a> 五层因特网协议</h5> <ol><li><p>应用层(dns,http) DNS 解析成 IP 并发送 http 请求</p></li> <li><p>传输层(tcp,udp) 建立 tcp 连接（三次握手）</p></li> <li><p>网络层(IP,ARP) IP 寻址</p></li> <li><p>数据链路层(PPP) 封装成帧</p></li> <li><p>物理层(利用物理介质传输比特流) 物理传输（然后传输的时候通过双绞线，电磁波等各种介质）</p></li></ol> <h2 id="_2-服务器接收到请求"><a href="#_2-服务器接收到请求" class="header-anchor">#</a> 2 服务器接收到请求</h2> <h5 id="负载均衡"><a href="#负载均衡" class="header-anchor">#</a> 负载均衡</h5> <p>反向代理服务器（nginx）</p> <h5 id="后台处理"><a href="#后台处理" class="header-anchor">#</a> 后台处理</h5> <ol><li>一般有的后端是有统一的验证的，如安全拦截，跨域验证</li> <li>如果这一步不符合规则，就直接返回了相应的 http 报文（如拒绝请求等）</li> <li>然后当验证通过后，才会进入实际的后台代码，此时是程序接收到请求，然后执行（譬如查询数据库，大量计算等等）</li> <li>等程序执行完毕后，就会返回一个 http 响应包（一般这一步也会经过多层封装）</li> <li>然后就是将这个包从后端发送到前端，完成交互</li></ol> <h5 id="后台和前台的-http-交互"><a href="#后台和前台的-http-交互" class="header-anchor">#</a> 后台和前台的 http 交互</h5> <p>http 报文作为信息的载体</p> <h2 id="_3-解析渲染页面"><a href="#_3-解析渲染页面" class="header-anchor">#</a> 3. 解析渲染页面</h2> <p>浏览器内核（渲染进程）拿到 htpp 请求过来的内容后，渲染（GUI 线程）就开始工作了。</p> <p>网上乱七八糟的解释信息太多了，尽量简明扼要说清楚。</p> <h4 id="_3-1-渲染流程"><a href="#_3-1-渲染流程" class="header-anchor">#</a> 3.1 渲染流程</h4> <ol><li>将 HTML 解析为 DOM 树，</li> <li>将 CSS 解析为 CSSOM 树</li> <li>DOM 树与 CSSOM 树合并后形成渲染树</li> <li>根据渲染树来布局，以计算每个节点的几何信息（Layout/Reflow）</li> <li>绘制渲染树，元素的像素信息（Paint）</li> <li>GPU 将进行图层合成显示到屏幕上</li></ol> <h5 id="渲染流程图"><a href="#渲染流程图" class="header-anchor">#</a> 渲染流程图</h5> <img src="/basicSystem/render1.png" alt="渲染流程图"> <h5 id="构建渲染树"><a href="#构建渲染树" class="header-anchor">#</a> 构建渲染树</h5> <img src="/basicSystem/render2.png" alt="形成渲染树的过程"> <p>为构建渲染树，浏览器大体上完成了下列工作：</p> <ol><li>从 DOM 树的根节点开始遍历每个可见节点。
+<ul><li>某些节点不可见（例如脚本标记、元标记等），因为它们不会体现在渲染输出中，所以会被忽略。</li> <li>某些节点通过 CSS 隐藏，因此在渲染树中也会被忽略，例如，上例中的 span 节点---不会出现在渲染树中，---因为有一个显式规则在该节点上设置了“display: none”属性。</li> <li>visibility: hidden 与 display: none 是不一样的。前者隐藏元素，但元素仍占据着布局空间（即将其渲染成一个空框），而后者 (display: none) 将元素从渲染树中完全移除，元素既不可见，也不是布局的组成部分。</li></ul></li> <li>对于每个可见节点，为其找到适配的 CSSOM 规则并应用它们。</li> <li>发送可见节点，连同其内容和计算的样式。</li></ol> <h5 id="布局"><a href="#布局" class="header-anchor">#</a> 布局</h5> <p>到目前为止，我们计算了哪些节点应该是可见的以及它们的计算样式，但我们尚未计算它们在设备视口内的确切位置和大小---这就是“布局”阶段，也称为“自动重排”。</p> <h5 id="绘制"><a href="#绘制" class="header-anchor">#</a> 绘制</h5> <p>将渲染树中的每个节点转换成屏幕上的实际像素。这一步通常称为“绘制”或“栅格化”。</p> <h5 id="display"><a href="#display" class="header-anchor">#</a> Display</h5> <p>GPU 将多个位图合成, draw 到屏幕上。</p> <h4 id="_3-2-阻塞渲染的-css"><a href="#_3-2-阻塞渲染的-css" class="header-anchor">#</a> 3.2 阻塞渲染的 CSS</h4> <p>在渲染树构建中，我们看到关键渲染路径要求我们同时具有 DOM 和 CSSOM 才能构建渲染树。</p> <p>CSS 是阻塞渲染的资源。需要将它尽早、尽快地下载到客户端，以便缩短首次渲染的时间。</p> <h4 id="_3-3-阻塞渲染的-javascript"><a href="#_3-3-阻塞渲染的-javascript" class="header-anchor">#</a> 3.3 阻塞渲染的 JavaScript</h4> <p>遇到 JS 就 UI 线程就挂起，JS 引擎执行完毕，再继续。</p> <h4 id="_3-4-文档流-与-盒模型"><a href="#_3-4-文档流-与-盒模型" class="header-anchor">#</a> 3.4 文档流 与 盒模型</h4> <h5 id="盒模型"><a href="#盒模型" class="header-anchor">#</a> 盒模型</h5> <p>每个元素都是一个盒子，一个盒子包括了 宽高、内边距、边框、外边距。</p> <ul><li>标准盒模型：宽高只是内容（content）的宽高</li> <li>IE 盒模型：宽高是内容(content)+填充(padding)+边框(border)的总宽高，相当于标准盒子设置了 <code>box-sizing:border-box</code>;</li></ul> <h5 id="文档流"><a href="#文档流" class="header-anchor">#</a> 文档流</h5> <p>每个元素都是一个盒子按照顺序从左到右从上到下依次排开，像流水一样称之为文档流。</p> <h5 id="脱离文档流"><a href="#脱离文档流" class="header-anchor">#</a> 脱离文档流</h5> <p>定位元素（absolute、fixed...）从原有位置独立出来，不再受周围元素影响，这种行为叫脱离文档流。</p> <h5 id="bfc"><a href="#bfc" class="header-anchor">#</a> BFC</h5> <p>肯德基，大名：块级格式化上下文。</p> <p>为啥老说 BFC，猜测 CSS 作为描述语言没啥深奥的为了凸现自己发明了个像闭包这样的词汇估计捉摸人。</p> <blockquote><p>盒模型有块级、行内、行内块，本来大家好好的相安无事。可是有一天你一个骚操作给自己搞了个浮动，一看，父级元素坍塌了后面的元素错乱了...当然也不是所有相安无事，你和楼下的小伙子互看不上眼，约定各自距离 10 公分，你俩骂骂咧咧都动了动，一看，咋还是 10 公分不是 20 公分么？</p></blockquote> <p>发现什么问题了吗？</p> <blockquote><p>你不是一个正儿八经的盒子了，简单来说没有了边界感。</p></blockquote> <p>BFC 干什么呢？</p> <blockquote><p>相当于一个透明的玻璃罩，把整个盒子框起来，里面随便折腾，从外面看跟个没事人一样。</p></blockquote> <p>满足下列条件之一就可触发 BFC</p> <ul><li>根元素，即 HTML 元素</li> <li>float 的值不为 none</li> <li>overflow 的值不为 visible</li> <li>display 的值为 inline-block、table-cell、table-caption</li> <li>position 的值为 absolute 或 fixed</li></ul> <h5 id="ifc"><a href="#ifc" class="header-anchor">#</a> IFC</h5> <p>好吧，我并不知道什么东西</p> <h4 id="_3-5-层合成-composite"><a href="#_3-5-层合成-composite" class="header-anchor">#</a> 3.5 层合成 composite</h4> <p>层，是一个立体概念，元素上下堆砌形成一个个层空间，整个文档流是一个默认的复合图层。</p> <p>GPU 中，各个复合图层是单独绘制的，所以互不影响。可以通过硬件加速开启一个新的复合图层，这也是 GPU 加速的由来。</p> <p>开启方法：
+translate3d、translateZ、opacity（动画过程中）、will-chang（opacity、transform、top、left、bottom、right）、<code>&lt;video&gt;&lt;iframe&gt;&lt;canvas&gt;&lt;webgl&gt;</code>等元素</p> <p>避坑：
+使用硬件加速时，尽可能的使用 index，防止浏览器默认给后续的元素创建复合层渲染。</p> <h4 id="_3-6-重排"><a href="#_3-6-重排" class="header-anchor">#</a> 3.6 重排</h4> <p>元素大小位置等几何信息改变时，可能影响父级元素及其他元素。脱离文档流只影响自己。</p> <h4 id="_3-7-重绘"><a href="#_3-7-重绘" class="header-anchor">#</a> 3.7 重绘</h4> <p>不设计元素大小位置修改的其他属性，比如颜色等。重排一定重绘。</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/bbzz/basicSystem/edit/master/docs/deepLearning/render.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">8/5/2020, 9:43:58 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/basicSystem/deepLearning/eventLoop.html" class="prev">
+        05 JavaScript 运行机制
+      </a></span> <span class="next"><a href="/basicSystem/deepLearning/http.html">
+        待续 前后端通信
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/basicSystem/assets/js/app.fe57eed6.js" defer></script><script src="/basicSystem/assets/js/3.40885dd2.js" defer></script><script src="/basicSystem/assets/js/25.09a10bf9.js" defer></script>
+  </body>
+</html>
